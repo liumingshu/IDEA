@@ -109,7 +109,7 @@ export default {
 .registerDiv {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 50% ;
   margin-top: -200px;
   margin-left: -250px;
   width: 450px;

@@ -11,8 +11,9 @@
             <el-input style="width: 200px" type="password" v-model="loginForm.password" show-password autocomplete="off" size="small" @keyup.enter.native="confirm"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="confirm" :disabled="confirm_disabled">确定</el-button>
             <el-button type="primary" @click="goToRegister">跳转到注册</el-button>
+            <el-button type="primary" @click="confirm" :disabled="confirm_disabled">确定</el-button>
+
           </el-form-item>
         </el-form>
       </div>
@@ -49,7 +50,7 @@ export default {
           this.$axios.post(this.$httpUrl + '/user/login', this.loginForm).then(res => {
             console.log(res.data);
             if (res.data.code == 200) {
-              sessionStorage.setItem("SurUser", JSON.stringify(res.data.data));
+              sessionStorage.setItem("CurUser", JSON.stringify(res.data.data));
               this.$router.replace('/Index');
             } else {
               this.confirm_disabled = false;
