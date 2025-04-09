@@ -105,18 +105,14 @@ public class UserController {
         return Result.suc(userService.list(lambdaQueryWrapper));
     }
 
-//    @PostMapping("/listPage")
-//    public List<User> listPage(@RequestBody QueryPageParam query){
-////        public List<User> listPage(@RequestBody HashMap map){
-////        System.out.println(query);
-//
-//        System.out.println("num==="+ query.getPageNum());
-//        System.out.println("size==="+ query.getPageSize());
+//    @PostMapping("/listPageC")
+//    public List<User> listPageC(@RequestBody QueryPageParam query){
 //
 //        HashMap param = query.getParam();
 //        String name = (String)param.get("name");
 //        System.out.println("name"+(String)param.get("name"));
-////        System.out.println("no==="+(String)param.get("no"));
+//
+//        String roleId = (String)param.get("roleId");
 //
 //        Page<User> page = new Page();
 //        page.setCurrent(query.getPageNum());
@@ -125,7 +121,7 @@ public class UserController {
 //        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper();
 //        lambdaQueryWrapper.like(User::getName,name);
 //
-//        IPage result = userSercive.page(page,lambdaQueryWrapper);
+//        IPage result = userService.page(page,lambdaQueryWrapper);
 //
 //        System.out.println("Total=="+result.getTotal());
 //        return result.getRecords();
@@ -135,6 +131,9 @@ public class UserController {
     public Result listPageC1(@RequestBody QueryPageParam query){
         HashMap param = query.getParam();
         String name = (String)param.get("name");
+        String sex = (String)param.get("sex");
+        String roleId = (String)param.get("roleId");
+
         Page<User> page = new Page();
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
@@ -143,6 +142,13 @@ public class UserController {
         if(StringUtils.isNotBlank(name) && !"null".equals(name)){
             lambdaQueryWrapper.like(User::getName,name);
         }
+        if(StringUtils.isNotBlank(sex)){
+            lambdaQueryWrapper.eq(User::getSex,sex);
+        }
+        if(StringUtils.isNotBlank(roleId)){
+            lambdaQueryWrapper.eq(User::getRoleId,roleId);
+        }
+        System.out.println(roleId);
         IPage result = userService.page(page,lambdaQueryWrapper);
 
         return Result.suc(result.getRecords(),result.getTotal());
